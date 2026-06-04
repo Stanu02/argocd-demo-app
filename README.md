@@ -1,50 +1,92 @@
 # GitOps Demo with ArgoCD 🚀
 
-A beginner-friendly GitOps implementation using Kubernetes, ArgoCD, and GitHub.
+This project demonstrates a simple GitOps workflow using Kubernetes, ArgoCD, and GitHub.
 
-## What This Project Does
-
-Every time a Kubernetes manifest is pushed to GitHub:
-
-1. ArgoCD detects the change
-2. Synchronizes the cluster automatically
-3. Deploys the updated resources to Kubernetes
-4. Keeps the cluster state aligned with Git
-
-No manual `kubectl apply` commands required.
+The goal was to understand how applications can be deployed automatically to Kubernetes whenever changes are pushed to GitHub.
 
 ---
 
-## Tech Stack
+## What I Built
 
-| Layer                   | Tool       |
-| ----------------------- | ---------- |
-| Version Control         | GitHub     |
-| GitOps Engine           | ArgoCD     |
-| Container Runtime       | Docker     |
-| Kubernetes Cluster      | kind       |
-| Container Orchestration | Kubernetes |
-| CLI Tools               | kubectl    |
+- Used Terraform to learn Infrastructure as Code (IaC) concepts
+- Created a local Kubernetes cluster using kind
+- Installed ArgoCD inside the cluster
+- Stored Kubernetes manifests in GitHub
+- Connected ArgoCD to the GitHub repository
+- Deployed an Nginx application using GitOps
+- Verified the deployment by accessing the application in a browser
 
 ---
 
-## Architecture
+## End-to-End Flow
 
 ```text
-GitHub Repository
-        ↓
-      ArgoCD
-        ↓
- Kubernetes Cluster (kind)
-        ↓
- Namespace
-        ↓
- Deployment
-        ↓
- Service
-        ↓
-   Nginx Application
+Terraform
+   ↓
+Learned Infrastructure as Code concepts
+
+Docker
+   ↓
+Runs kind cluster nodes
+
+kind
+   ↓
+Creates local Kubernetes cluster
+
+kubectl
+   ↓
+Manages Kubernetes resources
+
+ArgoCD
+   ↓
+Installed inside Kubernetes
+
+GitHub
+   ↓
+Stores Kubernetes manifests
+
+ArgoCD
+   ↓
+Watches GitHub for changes
+
+Kubernetes
+   ↓
+Deploys resources automatically
+
+Nginx Application
+   ↓
+Accessible in browser
 ```
+
+---
+
+## GitOps Workflow
+
+```text
+Developer updates manifest
+            ↓
+         git push
+            ↓
+     GitHub Repository
+            ↓
+    ArgoCD detects change
+            ↓
+      Syncs Kubernetes
+            ↓
+   Application updated automatically
+```
+
+---
+
+## Technologies Used
+
+- Terraform
+- Docker
+- kind
+- Kubernetes
+- ArgoCD
+- GitHub
+- kubectl
 
 ---
 
@@ -66,55 +108,25 @@ argocd-demo-app/
 
 ---
 
-## Kubernetes Resources Deployed
-
-### Namespace
-
-* Created a dedicated namespace called `demo-app`
-
-### Deployment
-
-* Deployed an Nginx container
-* 1 replica managed by Kubernetes Deployment
-
-### Service
-
-* Created a ClusterIP Service
-* Exposed the Nginx application inside the cluster
-
----
-
-## GitOps Workflow
-
-```text
-Update Kubernetes Manifest
-            ↓
-         git push
-            ↓
-     GitHub Repository
-            ↓
-    ArgoCD detects change
-            ↓
-      Syncs Kubernetes
-            ↓
-   Application updated
-```
-
----
-
 ## Screenshots
 
-### ArgoCD Application Sync
+### ArgoCD Successfully Synced
 
 ![ArgoCD Sync](screenshots/argocd-sync.png)
 
-### Kubernetes Resources
+ArgoCD continuously watches the GitHub repository and keeps the Kubernetes cluster synchronized.
+
+### Kubernetes Resources Created
 
 ![Kubernetes Resources](screenshots/kubernetes-resources.png)
 
-### Nginx Running
+Namespace, Deployment, ReplicaSet, Pod, and Service were automatically created from the manifests stored in GitHub.
+
+### Nginx Running in Browser
 
 ![Nginx Running](screenshots/nginx-running.png)
+
+The application was successfully deployed and accessed through Kubernetes.
 
 ---
 
@@ -140,15 +152,3 @@ http://localhost:8080
 
 ---
 
-## Key Concepts Demonstrated
-
-* GitOps
-* ArgoCD Continuous Deployment
-* Kubernetes Deployments
-* Kubernetes Services
-* Declarative Infrastructure
-* Automated Synchronization
-
----
-
-Built as a hands-on project to understand how modern teams deploy applications using GitOps principles.
